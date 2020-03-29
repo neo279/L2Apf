@@ -45,7 +45,7 @@
 						(send-packet cn (game-client-packet/enter-world))
 						loop
 					))
-					((0x74) ( ; wait for gg query
+					((#x74) ( ; wait for gg query
 						(refresh-quest-list cn)
 						(refresh-skill-list cn)
 					))
