@@ -595,35 +595,35 @@
 	)
 
 	(define handlers-table (make-hash (list
-		(cons #x01 (cons game-server-packet/move-to-point packet-handler/move-to-point)) ; change-moving
-		(cons #x03 (cons game-server-packet/char-info packet-handler/char-info)) ; creature-create
-		(cons #x04 (cons game-server-packet/user-info packet-handler/user-info)) ; creature-create
-		(cons #x05 (cons game-server-packet/attack packet-handler/attack)) ; attack
-		(cons #x06 (cons game-server-packet/die packet-handler/die)) ; die
-		(cons #x07 (cons game-server-packet/revive packet-handler/revive)) ; revive
+		(cons #x2F (cons game-server-packet/move-to-point packet-handler/move-to-point)) ; change-moving
+		(cons #x31 (cons game-server-packet/char-info packet-handler/char-info)) ; creature-create
+		(cons #x32 (cons game-server-packet/user-info packet-handler/user-info)) ; creature-create
+		(cons #x33 (cons game-server-packet/attack packet-handler/attack)) ; attack
+		(cons #x00 (cons game-server-packet/die packet-handler/die)) ; die
+		(cons #x01 (cons game-server-packet/revive packet-handler/revive)) ; revive
 		; #x0a AttackCanceld
-		(cons #x0b (cons game-server-packet/spawn-item packet-handler/spawn-item)) ; item-spawn
-		(cons #x0c (cons game-server-packet/drop-item packet-handler/drop-item)) ; item-spawn
-		(cons #x0d (cons game-server-packet/pick-item packet-handler/pick-item)) ; item-pick
-		(cons #x0e (cons game-server-packet/status-update packet-handler/status-update)) ; creature-update
+		(cons #x05 (cons game-server-packet/spawn-item packet-handler/spawn-item)) ; item-spawn
+		(cons #x16 (cons game-server-packet/drop-item packet-handler/drop-item)) ; item-spawn
+		(cons #x17 (cons game-server-packet/pick-item packet-handler/pick-item)) ; item-pick
+		(cons #x28 (cons game-server-packet/status-update packet-handler/status-update)) ; creature-update
 		; #x10 SellList
-		(cons #x12 (cons game-server-packet/object-deleted packet-handler/object-deleted)) ; object-delete
+		(cons #x08 (cons game-server-packet/object-deleted packet-handler/object-deleted)) ; object-delete
 		; #x13 CharSelectInfo
 		; #x15 CharSelected
 		; #x17 CharTemplates
-		(cons #x16 (cons game-server-packet/npc-info packet-handler/npc-info)) ; creature-create
-		(cons #x1b (cons game-server-packet/inventory-info packet-handler/inventory-info))
+		(cons #x0c (cons game-server-packet/npc-info packet-handler/npc-info)) ; creature-create
+		(cons #x11 (cons game-server-packet/inventory-info packet-handler/inventory-info))
 		; #x25 ActionFailed
-		(cons #x27 (cons game-server-packet/inventory-update packet-handler/inventory-update))
-		(cons #x28 (cons game-server-packet/teleport packet-handler/teleport)) ; teleport
-		(cons #x29 (cons game-server-packet/target-selected packet-handler/target-selected)) ; change-target
-		(cons #x2a (cons game-server-packet/target-unselected packet-handler/target-unselected)) ; change-target
+		(cons #x21 (cons game-server-packet/inventory-update packet-handler/inventory-update))
+		(cons #x22 (cons game-server-packet/teleport packet-handler/teleport)) ; teleport
+		(cons #x23 (cons game-server-packet/target-selected packet-handler/target-selected)) ; change-target
+		(cons #x24 (cons game-server-packet/target-unselected packet-handler/target-unselected)) ; change-target
 		; #x2b ? AutoAttackStart
 		; #x2c ? AutoAttackStop
-		(cons #x2d (cons game-server-packet/social-action packet-handler/social-action)) ; gesture
-		(cons #x2e (cons game-server-packet/change-move-type packet-handler/change-move-type)) ; change-walking
-		(cons #x2f (cons game-server-packet/change-wait-type packet-handler/change-wait-type)) ; change-sitting
-		(cons #x32 (cons game-server-packet/ask-join-clan packet-handler/ask-join-clan)) ; ask
+		(cons #x27 (cons game-server-packet/social-action packet-handler/social-action)) ; gesture
+		(cons #x28 (cons game-server-packet/change-move-type packet-handler/change-move-type)) ; change-walking
+		(cons #x29 (cons game-server-packet/change-wait-type packet-handler/change-wait-type)) ; change-sitting
+		(cons #x2c (cons game-server-packet/ask-join-clan packet-handler/ask-join-clan)) ; ask
 		(cons #x39 (cons game-server-packet/ask-join-party packet-handler/ask-join-party)) ; ask
 		; (cons #x3a (cons game-server-packet/reply-join-party packet-handler/reply-join-party)) ; reject
 		; (cons #x45 (cons game-server-packet/shortcut-init packet-handler/shortcut-init))
@@ -639,17 +639,17 @@
 		(cons #x50 (cons game-server-packet/party-clear-members packet-handler/party-clear-members)) ; party-leave
 		(cons #x51 (cons game-server-packet/party-delete-member packet-handler/party-delete-member)) ; party-memeber-leave
 		(cons #x52 (cons game-server-packet/party-member-update packet-handler/party-member-update)) ; creature-update
-		(cons #x58 (cons game-server-packet/skill-list packet-handler/skill-list))
-		(cons #x60 (cons game-server-packet/move-to-pawn packet-handler/move-to-pawn)) ; change-moving
-		(cons #x61 (cons game-server-packet/validate-location packet-handler/validate-location))
-		(cons #x64 (cons game-server-packet/system-message packet-handler/system-message)) ; system-message
+		(cons #x5F (cons game-server-packet/skill-list packet-handler/skill-list))
+		(cons #x72 (cons game-server-packet/move-to-pawn packet-handler/move-to-pawn)) ; change-moving
+		(cons #x79 (cons game-server-packet/validate-location packet-handler/validate-location))
+		(cons #x62 (cons game-server-packet/system-message packet-handler/system-message)) ; system-message
 		; #x65 StartPledgeWar
 		; #x6d SetupGauge
 		; #x6f ChooseInventoryItem
-		(cons #x76 (cons game-server-packet/skill-launched packet-handler/skill-launched)) ; skill-launched ; TODO 8e?
+		(cons #x54 (cons game-server-packet/skill-launched packet-handler/skill-launched)) ; skill-launched ; TODO 8e?
 		; #x76 SetToLocation
-		(cons #x7d (cons game-server-packet/ask-be-friends packet-handler/ask-be-friends)) ; ask
-		(cons #x7e (cons void packet-handler/logout)) ; logout
+		(cons #x83 (cons game-server-packet/ask-be-friends packet-handler/ask-be-friends)) ; ask
+		(cons #x84 (cons void packet-handler/logout)) ; logout
 		; (cons #x7f (cons game-server-packet/ packet-handler/)) ; MagicEffectIcons
 		; (cons #x80 (cons game-server-packet/quest-list packet-handler/quest-list)) ; quest-list
 		; #x81 EnchantResult
@@ -657,8 +657,8 @@
 		; #x98 PlaySound
 		; #x99 StaticObject
 		; #xa6 MyTargetSelected
-		(cons #xa7 (cons game-server-packet/party-member-position packet-handler/party-member-position)) ; creature-update
-		(cons #xa8 (cons game-server-packet/ask-join-alliance packet-handler/ask-join-alliance)) ; ask
+		(cons #xba (cons game-server-packet/party-member-position packet-handler/party-member-position)) ; creature-update
+		(cons #xbb (cons game-server-packet/ask-join-alliance packet-handler/ask-join-alliance)) ; ask
 		; #xc4 Earthquake
 		; #xc8 NormalCamera
 		; #xd0 MultiSellList
