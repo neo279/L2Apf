@@ -17,8 +17,8 @@
 	)
 
 	(define (encrypt data key)
-		(apf-debug "ENC DATA <- ~v" data)
-		(apf-debug "ENC KEY <- ~v" key)
+		; (apf-debug "ENC DATA <- ~v" data)
+		; (apf-debug "ENC KEY <- ~v" key)
 		(define (f d r k p)
 			(if (null? d)
 				r
@@ -29,7 +29,7 @@
 		)
 		(let ((data (bytes->list data)) (key (apply circular-list (bytes->list key))))
 			(let ((out (list->bytes (reverse (f data (list) key 0)))))
-				(apf-debug "ENC DATA -> ~v" out)
+				; (apf-debug "ENC DATA -> ~v" out)
 				out
 			)
 		)
