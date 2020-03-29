@@ -12,6 +12,7 @@
 		(struct-out connection)
 		(contract-out
 			(read-buffer (-> input-port? crypter? bytes?))
+			(read-buffer-raw (-> input-port? bytes?))
 			(read-thread (-> input-port? crypter? async-channel? void?))
 			(read-packet (-> connection? bytes?))
 			(write-buffer (-> output-port? bytes? void?))
@@ -39,12 +40,25 @@
 		[world #:auto]
 	) #:mutable)
 
+	(define (read-buffer-raw port)
+		(let loop ()
+			(let ((size (integer-bytes->integer (read-bytes 2 port) #f)))
+				(if (> size 2)
+						(let ((buffer (read-bytes (- size 2) port)))
+							(apf-debug "Packet <- ~v" buffer)
+							buffer
+						)
+					(loop) ; Skip empty packets.
+				)
+			)
+		)
+	)
+
 	(define (read-buffer port crypter)
 		(let loop ()
 			(let ((size (integer-bytes->integer (read-bytes 2 port) #f)))
 				(if (> size 2)
 						(let ((buffer (read-bytes (- size 2) port)))
-                                                  (apf-debug "Packet <- ~v" buffer)
 							(let ((buffer (crypter buffer #f)))
 								(apf-debug "Packet <- ~v" buffer)
 								buffer

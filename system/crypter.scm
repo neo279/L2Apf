@@ -1,20 +1,24 @@
 (module system racket/base
 	(require
 		srfi/1
+		racket/trace
 		(rename-in racket/contract (any all/c))
+		"debug.scm"
 	)
 	(provide (contract-out
 		(crypter? (any/c . -> . boolean?))
-		(make-crypter ((and/c bytes? length-is-8?) . -> . procedure?))
+		(make-crypter ((and/c bytes? length-is-16?) . -> . procedure?))
 	))
 
 	(define (update-key key size)
-		(let ((t (+ (integer-bytes->integer (subbytes key 0 4) #f) size)) (m (expt 2 32)))
-			(bytes-append (integer->integer-bytes (if (>= t m) (- t m) t) 4 #f) (subbytes key 4 8))
+		(let ((t (+ (integer-bytes->integer (subbytes key 8 12) #f) size)))
+			(bytes-append (subbytes key 0 8) (integer->integer-bytes (bitwise-and t #xffffffff) 4 #f) (subbytes key 12 16))
 		)
 	)
 
 	(define (encrypt data key)
+		(apf-debug "ENC DATA <- ~v" data)
+		(apf-debug "ENC KEY <- ~v" key)
 		(define (f d r k p)
 			(if (null? d)
 				r
@@ -24,7 +28,10 @@
 			)
 		)
 		(let ((data (bytes->list data)) (key (apply circular-list (bytes->list key))))
-			(list->bytes (reverse (f data (list) key 0)))
+			(let ((out (list->bytes (reverse (f data (list) key 0)))))
+				(apf-debug "ENC DATA -> ~v" out)
+				out
+			)
 		)
 	)
 
@@ -64,7 +71,7 @@
 		(procedure? cr)
 	)
 
-	(define (length-is-8? data)
-		(= (bytes-length data) 8)
+	(define (length-is-16? data)
+		(= (bytes-length data) 16)
 	)
 )
