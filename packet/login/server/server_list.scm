@@ -18,6 +18,8 @@
 				(cons 'online (read-int16 #f s))
 				(cons 'maximum (read-int16 #f s))
 				(cons 'state (> (read-byte s) 0))
+				(cons 'type (read-int32 #f s))
+				(cons 'brackets (> (read-byte s) 0))
 			)))
 				(begin
 					(read-bytes (+ 4 1) s)

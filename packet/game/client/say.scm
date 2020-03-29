@@ -10,7 +10,7 @@
 	(define (game-client-packet/say message channel name)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x38 s)
+				(write-byte #x49 s)
 				(write-utf16 message s)
 				(write-int32 (cdr (assoc channel (alist-flip channels))) #t s)
 				(when (and (equal? channel 'chat-channel/tell) (not (string=? name "")))

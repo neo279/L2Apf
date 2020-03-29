@@ -11,7 +11,7 @@
 		(let ((s (open-output-bytes)))
 			(let ((id (cdr (assoc action (alist-flip actions)))))
 				(begin
-					(write-byte #x1b s)
+					(write-byte #x34 s)
 					(write-int32 id #f s)
 					(get-output-bytes s)
 				)

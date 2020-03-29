@@ -6,7 +6,7 @@
 	(define (game-client-packet/enchant-item object-id)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x58 s)
+				(write-byte #x5F s)
 				(write-int32 object-id #f s)
 				(get-output-bytes s)
 			)

@@ -21,6 +21,7 @@
 		"refresh_manor_list.scm"
 		"refresh_quest_list.scm"
 		"refresh_skill_list.scm"
+		"../system/debug.scm"
 	)
 	(provide (contract-out
 		(select-character (-> connection? protagonist? evt?))
@@ -34,13 +35,18 @@
 		(let loop ()
 			(let ((buffer (read-packet cn)))
 				(case (get-packet-id buffer)
-					((#x15) (let ((packet (game-server-packet/player-character buffer)))
+					((#x0b) (let ((packet (game-server-packet/player-character buffer)))
+						(apf-debug "CharacterSelected")
+
 						(update-protagonist! me packet)
 						(set-world-me! (connection-world cn) me)
 
 						(refresh-manor-list cn)
-						(refresh-quest-list cn)
 						(send-packet cn (game-client-packet/enter-world))
+						loop
+					))
+					((#x74) ( ; wait for gg query
+						(refresh-quest-list cn)
 						(refresh-skill-list cn)
 					))
 					(else (loop))

@@ -5,7 +5,7 @@
 	(define (game-client-packet/refresh-skill-list)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x3f s)
+				(write-byte #x50 s)
 				(get-output-bytes s)
 			)
 		)

@@ -6,7 +6,7 @@
 		(let ((s (open-output-bytes)))
 			(begin
 				(write-byte #xd0 s)
-				(write-int16 #x08 #f s)
+				(write-int16 #x01 #f s)
 				(get-output-bytes s)
 			)
 		)

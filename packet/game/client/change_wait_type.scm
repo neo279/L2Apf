@@ -5,7 +5,7 @@
 	(define (game-client-packet/change-wait-type sit?)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x1d s)
+				(write-byte #x36 s)
 				(write-int32 (if sit? 0 1) #f s)
 				(get-output-bytes s)
 			)

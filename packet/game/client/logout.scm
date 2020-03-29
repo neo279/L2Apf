@@ -6,7 +6,7 @@
 	(define (game-client-packet/logout)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x09 s)
+				(write-byte #x00 s)
 				(get-output-bytes s)
 			)
 		)

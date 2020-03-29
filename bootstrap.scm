@@ -17,6 +17,7 @@
 		"api/select_character.scm"
 		"api/logout.scm"
 		"program/program.scm"
+		"system/debug.scm"
 	)
 	(provide (contract-out
 		(fighter? (creature? . -> . boolean?))
@@ -123,11 +124,13 @@
 		(let ((connection (connect host port)))
 			(let ((world (first (login connection account password))))
 				(let ((me (findf (char-name=? name) (select-server connection world))))
-					(let ((events (select-character connection me)))
+					(begin
+						(apf-debug name)
+						(let ((events (select-character connection me)))
 						(with-handlers ((exn:break? (lambda (e) (terminate connection events))))
 							(entry connection world me events)
 						)
-					)
+					))
 				)
 			)
 		)

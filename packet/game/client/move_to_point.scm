@@ -15,7 +15,7 @@
 	(define (game-client-packet/move-to-point origin target [device 'mouse])
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x01 s)
+				(write-byte #x0F s)
 				(write-int32 (exact-round (point/3d-x target)) #t s)
 				(write-int32 (exact-round (point/3d-y target)) #t s)
 				(write-int32 (exact-round (point/3d-z target)) #t s)

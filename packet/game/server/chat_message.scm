@@ -9,6 +9,7 @@
 				(cons 'object-id (read-int32 #f s))
 				(cons 'channel (cdr (assoc (read-int32 #t s) channels =)))
 				(cons 'author (read-utf16 s))
+				(cons 'npc-string (read-int32 #f s))
 				(cons 'text (read-utf16 s))
 			)
 		)
