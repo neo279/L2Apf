@@ -26,8 +26,10 @@
 						(case (get-packet-id buffer)
 							((#x00) (let ((packet (login-server-packet/init buffer)))
 								(set-connection-packet-channel! cn pc)
-								(set-connection-read-thread! cn (thread (bind read-thread input-port crypter pc)))
-								(set-connection-send-thread! cn (thread (bind send-thread output-port crypter)))
+                                (let ((crypter (make-blowfish-crypter (ref packet 'blowfish-key))))
+                                  (set-connection-read-thread! cn (thread (bind read-thread input-port crypter pc)))
+                                  (set-connection-send-thread! cn (thread (bind send-thread output-port crypter)))
+                                  )
 								(set-connection-session-id! cn (ref packet 'session-id))
 								(set-connection-session-key! cn (ref packet 'rsa-key))
 								(send-packet cn (login-client-packet/gg-auth (list
@@ -38,7 +40,7 @@
 							((#x0b) (let ((packet (login-server-packet/gg-reply buffer)))
 								cn
 							))
-							(else #f) ; TODO Raise error.
+							(else (raise-user-error "Unexpected login server response, packet:" buffer))
 						)
 					)
 				)

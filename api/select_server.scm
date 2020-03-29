@@ -17,6 +17,7 @@
 			"packet/game/server/character_list.scm"
 			"model/protagonist.scm"
 			"model/world.scm"
+			"system/debug.scm"
 		)
 	)
 	(provide (contract-out
@@ -50,13 +51,16 @@
 
 			; Game-server interaction.
 			(let-values (((input-port output-port) (tcp-connect host port)))
-				(write-buffer output-port (game-client-packet/protocol-version (list
+				(let ((buffer (game-client-packet/protocol-version (list
 					(cons 'protocol (connection-protocol cn))
-				)))
+				))))
+					(apf-debug "Packet -> ~v" buffer)
+					(write-buffer output-port buffer)
+				)
 				(let loop ()
-					(let ((buffer (if (connection-session-id cn) (read-packet cn) (read-buffer input-port))))
+					(let ((buffer (if (connection-session-id cn) (read-packet cn) (read-buffer-raw input-port))))
 						(case (get-packet-id buffer)
-							((#x00) (let ((packet (game-server-packet/key-packet buffer)))
+							((#x2e) (let ((packet (game-server-packet/key-packet buffer)))
 								(let ((crypter (make-crypter (ref packet 'key))) (pc (connection-packet-channel cn)))
 									(set-connection-session-id! cn #t)
 									(set-connection-read-thread! cn (thread (bind read-thread input-port crypter pc)))
@@ -69,9 +73,10 @@
 								)))
 								(loop)
 							))
-							((#x13) (let ((packet (game-server-packet/character-list buffer)))
+							((#x09) (let ((packet (game-server-packet/character-list buffer)))
 								(map (lambda (data) (make-protagonist data)) (ref packet 'list))
 							))
+							((#x0a) (begin (disconnect cn) (raise-user-error "LoginFail" buffer)))
 							(else (raise-user-error "Unexpected game server response, packet:" buffer))
 						)
 					)
