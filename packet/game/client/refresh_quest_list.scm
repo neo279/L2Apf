@@ -5,7 +5,7 @@
 	(define (game-client-packet/refresh-quest-list)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x63 s)
+				(write-byte #x62 s)
 				(get-output-bytes s)
 			)
 		)

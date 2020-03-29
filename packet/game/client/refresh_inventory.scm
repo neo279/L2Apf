@@ -6,7 +6,7 @@
 	(define (game-client-packet/refresh-inventory)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x0f s)
+				(write-byte #x14 s)
 				(get-output-bytes s)
 			)
 		)
