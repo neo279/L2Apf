@@ -6,7 +6,7 @@
 	(define (game-client-packet/use-skill skill-id control? shift?)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x2f s)
+				(write-byte #x39 s)
 				(write-int32 skill-id #f s)
 				(write-int32 (if control? 1 0) #f s)
 				(write-byte (if shift? 1 0) s)

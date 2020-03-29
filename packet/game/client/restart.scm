@@ -5,7 +5,7 @@
 	(define (game-client-packet/restart)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x46 s)
+				(write-byte #x57 s)
 				(get-output-bytes s)
 			)
 		)

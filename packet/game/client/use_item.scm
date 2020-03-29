@@ -6,7 +6,7 @@
 	(define (game-client-packet/use-item object-id control?)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x14 s)
+				(write-byte #x19 s)
 				(write-int32 object-id #f s)
 				(write-int32 (if control? 1 0) #f s)
 				(get-output-bytes s)
