@@ -32,7 +32,7 @@
 	(define (game-client-packet/unequip-slot slot)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x11 s)
+				(write-byte #x16 s)
 				(write-int32 (assoc slot (alist-flip paperdoll) eq?) #f s)
 				(get-output-bytes s)
 			)

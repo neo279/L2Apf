@@ -12,7 +12,7 @@
 		(let ((s (open-output-bytes)))
 			(let ((id (cdr (assoc point (alist-flip return-points)))))
 				(begin
-					(write-byte #x6d s)
+					(write-byte #x7d s)
 					(write-int32 id #f s)
 					(get-output-bytes s)
 				)

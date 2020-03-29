@@ -10,7 +10,7 @@
 	(define (game-client-packet/attack-request object-id origin shift?)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x0a s)
+				(write-byte #x01 s)
 				(write-int32 object-id #f s)
 				(write-int32 (exact-round (point/3d-x origin)) #t s)
 				(write-int32 (exact-round (point/3d-y origin)) #t s)

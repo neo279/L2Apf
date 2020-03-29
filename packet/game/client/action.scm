@@ -6,7 +6,7 @@
 	(define (game-client-packet/action object-id origin shift?)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x04 s)
+				(write-byte #x1F s)
 				(write-int32 object-id #f s)
 				(write-point origin s)
 				(write-byte (if shift? 1 0) s)
