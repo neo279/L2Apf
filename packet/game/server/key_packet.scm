@@ -6,7 +6,8 @@
 		(let ((s (open-input-bytes buffer)))
 			(list
 				(cons 'id (read-byte s))
-				(cons 'key (begin (read-byte s) (read-bytes 8 s)))
+				(cons 'protocol-ok (read-byte s))
+				(cons 'key (bytes-append (read-bytes 8 s) (bytes #xc8 #x27 #x93 #x01 #xa1 #x6c #x31 #x97)))
 			)
 		)
 	)
