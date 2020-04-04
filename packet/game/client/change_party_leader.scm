@@ -7,7 +7,7 @@
 		(let ((s (open-output-bytes)))
 			(begin
 				(write-byte #xd0 s)
-				(write-int16 #x04 #f s)
+				(write-int16 #x0c #f s)
 				(write-utf16 name s)
 				(get-output-bytes s)
 			)

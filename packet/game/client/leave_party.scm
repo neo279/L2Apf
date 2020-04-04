@@ -6,7 +6,7 @@
 	(define (game-client-packet/leave-party)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x2b s)
+				(write-byte #x44 s)
 				(get-output-bytes s)
 			)
 		)

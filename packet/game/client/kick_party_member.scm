@@ -6,7 +6,7 @@
 	(define (game-client-packet/kick-party-memeber name)
 		(let ((s (open-output-bytes)))
 			(begin
-				(write-byte #x2c s)
+				(write-byte #x45 s)
 				(write-utf16 name s)
 				(get-output-bytes s)
 			)
